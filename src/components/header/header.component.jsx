@@ -9,21 +9,23 @@ import CartDropdown from '../cart-dropdown/cart-dropdown.component';
 import { selectCartHidden } from '../../redux/cart/cart.selectors';
 import { selectCurrentUser } from '../../redux/user/user.selectors';
 
+import { HeaderContainer,LogoContainer, OptionDiv, OptionLink  } from './header.styles';
+
 const Header = ({currentUser,hidden}) => {
     return ( 
-        <div className="header">
-            <Link className="logo-container" to="/">
+        <HeaderContainer>
+            <LogoContainer className="logo-container" to="/">
                 <Logo />
-            </Link>
+            </LogoContainer>
 
-            <div className="options">
-                <Link className="option" to="/shop">SHOP</Link>
-                <Link className="option" to="/contact">CONTACT</Link>
-                {currentUser ? <div className="option" onClick={()=> auth.signOut()}>SIGN OUT</div> : <Link className="option" to="/signin">SIGN IN</Link>}
+            <OptionDiv>
+                <OptionLink to="/shop">SHOP</OptionLink>
+                <OptionLink to="/contact">CONTACT</OptionLink>
+                {currentUser ? <OptionLink as='div' onClick={()=> auth.signOut()}>SIGN OUT</OptionLink> : <Link className="option" to="/signin">SIGN IN</Link>}
                 <CartIcon />
-            </div>
+            </OptionDiv>
             {hidden && <CartDropdown />}
-        </div>
+        </HeaderContainer>
      );
 }
 
@@ -37,4 +39,6 @@ const mapStateToProps = createStructuredSelector({
 //     hidden: selectCartHidden(state)
 // });
  
+
+//<OptionLink as='div' /> also pass component <OptionLink as={<Name of Component>}}>
 export default connect(mapStateToProps)(Header);
